@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34601.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RST-Algoritmi-ProgVaje2024", "RST-Algoritmi-ProgVaje2024\RST-Algoritmi-ProgVaje2024.csproj", "{09D15CD2-A377-40C0-912F-4D52B669316A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09D15CD2-A377-40C0-912F-4D52B669316A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09D15CD2-A377-40C0-912F-4D52B669316A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09D15CD2-A377-40C0-912F-4D52B669316A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09D15CD2-A377-40C0-912F-4D52B669316A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F593B3D8-8F05-4182-89B3-126FF0D851E0}
+	EndGlobalSection
+EndGlobal
