@@ -1,4 +1,7 @@
-﻿namespace RST_Algoritmi_ProgVaje2024
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+
+namespace RST_Algoritmi_ProgVaje2024
 {
     /// <summary>
     /// V ta projekt zapisujemo programsko kodo, 
@@ -11,11 +14,21 @@
     {
         static void Main(string[] args)
         {
-            // V prvem sklopu pripravljamo kodo za
+            // Preverjanje izvedbe zanke po Matejevem komentarju:
+            HitrostiZank();
+
+            // V prvem sklopu vaj pripravljamo kodo za
             // reševanje problema minimalnega vpetega drevesa v uteženih,
             // neusmerjenih grafih.
 
+            // Začnimo s testiranjem funkcij v razredu graf
+            //TestiranjeGrafov();
 
+            Console.Read();
+        }
+
+        private static void TestiranjeGrafov()
+        {   
             // Pripravimo primer grafa
             Graph mojGraf = new Graph(4);
             mojGraf.Edges.Add(new Edge(0, 1, 3));
@@ -38,7 +51,47 @@
             }
 
             Console.WriteLine($"Po {stevecPoskusov} poskusih smo našli povezav slučajni graf na {n} vozliščih " +
-                $"in {m} povezavah!");
+                $"in {m} povezavah!");            
+        }
+
+        private static void HitrostiZank()
+        {
+            // Test hitrosti izvajanja zanke:
+            List<int> lstLongList = Enumerable.Range(0, 1_000_000_000).ToList();
+            long dummy = 3;
+            Stopwatch sw = Stopwatch.StartNew();
+            // V tej zanki se v vsakem koraku pridobi lastnost length,
+            // zato je počasnejša
+            for (int i = 0; i < lstLongList.Count; i++)
+            {
+                dummy *= dummy;
+            }
+            Console.WriteLine($"{dummy}");
+            Console.WriteLine($"Izvedba zanke navzgor: {sw.Elapsed.TotalSeconds:0.#####}");
+
+            dummy = 3;
+            sw = Stopwatch.StartNew();
+            // V tej zanki length pridobimo le prvikrat,
+            // zato je hitrejša
+            for (int i = lstLongList.Count - 1; i >= 0; i--)
+            {
+                dummy *= dummy;
+            }
+            Console.WriteLine($"{dummy}");
+            Console.WriteLine($"Izvedba zanke navzdol: {sw.Elapsed.TotalSeconds:0.#####}");
+
+            dummy = 3;
+            int length = lstLongList.Count; // Shranimo si lastnost v spremenljivko
+            sw = Stopwatch.StartNew();
+            // V tej lastnosti length ne pridobimo, ker smo si jo shranili že zgoraj.
+            // Hitrost izvedbe je enaka kot v prejšnjem primeru.
+            for (int i = length - 1; i >= 0; i--)
+            {
+                dummy *= dummy;
+            }
+            Console.WriteLine($"{dummy}");
+            Console.WriteLine($"Izvedba zanke navzgor, vendar s shranjeno lastnostjo: {sw.Elapsed.TotalSeconds:0.#####}");
+
             Console.Read();
         }
     }
