@@ -94,7 +94,7 @@ namespace RST_Algoritmi_ProgVaje2024
 
 
         /// <summary>
-        /// Naredi naključen graf na N vozliščih in M povezavah.
+        /// Naredi slučajen graf na N vozliščih in M povezavah.
         /// Naključno določi tudi uteži na povezavah, 
         /// in sicer jim priredi celo število med 1 in weightUpperBound.
         /// </summary>
@@ -102,7 +102,11 @@ namespace RST_Algoritmi_ProgVaje2024
         {
             if (m > n * (n - 1) / 2)
             {
-                throw new Exception("Too many Edges!");
+                throw new Exception("Too many edges!");
+            }
+            else if(m < n-1 && isConnected)
+            {
+                throw new Exception("Not enough edges!");
             }
 
             Graph graph = new Graph(n);
