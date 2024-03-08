@@ -42,13 +42,18 @@ namespace RST_Algoritmi_ProgVaje2024
             Console.WriteLine($"Naš graf je naslednji:\n{mojGraf}\n");
 
             // Kreiramo slučajne grafe, dokler ne dobimo povezanega:
-            int n = 10000;
-            int m = 15000;
+            int n = 5000;
+            int m = 7000;
             Graph rndGraf = Graph.CreateRandomGraph(n, m, isConnected: true, weightUpperBound: 20);
+            
+            
             Stopwatch sw = Stopwatch.StartNew();
             sum = rndGraf.MinimalSpanningTreeByPrim();
-            Console.WriteLine($"Minimalno vpeto drevo ima vrednost:{sum} (Čas izvajanja: {sw.Elapsed.TotalSeconds:0.00})");
+            Console.WriteLine($"Minimalno vpeto drevo ima vrednost:{sum} (Čas izvajanja po Primu: {sw.Elapsed.TotalSeconds:0.00})");
 
+            sw = Stopwatch.StartNew();
+            sum = rndGraf.MinimalSpanningTreeByKruskal();
+            Console.WriteLine($"Minimalno vpeto drevo ima vrednost:{sum} (Čas izvajanja po Kruskalu: {sw.Elapsed.TotalSeconds:0.00})");
 
             Console.WriteLine($"Izvedba Primovega algoritma na grafu da vrednost: ");
         }

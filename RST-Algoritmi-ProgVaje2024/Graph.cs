@@ -1,4 +1,5 @@
 ﻿using RST_Algoritmi_ProgVaje2024;
+using System.Runtime.CompilerServices;
 
 namespace RST_Algoritmi_ProgVaje2024
 {
@@ -214,7 +215,77 @@ namespace RST_Algoritmi_ProgVaje2024
 
             //Izračunamo še vsoto vseh uteži na povezavah
             double sumWeights = lstEdgesOfTree.Sum(x => x.Weight);
+            return sumWeights;
+        }
 
+        public double MinimalSpanningTreeByKruskal()
+        {
+            // Uredimo povezave po utežeh
+            var lstOrderedWeights = this.Edges.OrderBy(e => e.Weight);
+
+            List<Edge> lstEdgesOfTree = new();
+
+            // Pomožen seznam za preverjanje ciklov
+            Dictionary<int, HashSet<int>> dicTrees = new();
+
+            // Po vrsti obravnavamo vse povezave
+            foreach (var edge in lstOrderedWeights)
+            {
+                int treeOfStart = -1;
+                int treeOfEnd = -1;
+                foreach (var pair in dicTrees)
+                {
+                    if (pair.Value.Contains(edge.Start))
+                    {
+                        treeOfStart = pair.Key;
+                    }
+                    if (pair.Value.Contains(edge.End))
+                    {
+                        treeOfEnd = pair.Key;
+                    }
+                }
+
+                // Glede na vsebovanost krajišč povezave v pomožnih drevesih,
+                // preverimo, če povezava ustvari cikel
+                if (treeOfStart == -1 && treeOfEnd == -1)
+                {
+                    dicTrees.Add(dicTrees.Keys.Count == 0 ? 1 : dicTrees.Keys.Max() + 1, new HashSet<int>() { edge.Start, edge.End });
+                }
+                else if (treeOfStart == treeOfEnd)
+                {
+                    // Dobili smo cikel in gremo na naslednjo povezavo
+                    continue;
+                }
+                else if (treeOfStart == -1 || treeOfEnd == -1)
+                {
+                    // Eno krajišče ni v nobenem drevesu
+                    // Ampak lahko dodamo oba, ker HashSet ne duplicira vrednosti
+                    int treeLabel = treeOfStart != -1 ? treeOfStart : treeOfEnd;
+                    dicTrees[treeLabel].Add(edge.Start);
+                    dicTrees[treeLabel].Add(edge.End);
+                }
+                else // Krajišči iz različnih dreves
+                {
+                    int maxLabel = treeOfStart > treeOfEnd ? treeOfStart : treeOfEnd;
+                    int minLabel = treeOfStart < treeOfEnd ? treeOfStart : treeOfEnd;
+
+                    foreach (var vertex in dicTrees[maxLabel])
+                    {
+                        dicTrees[minLabel].Add(vertex);
+                    }
+                    dicTrees.Remove(maxLabel);
+                }
+
+                // Dodamo povezavo, ker ne ustvari cikla
+                lstEdgesOfTree.Add(edge);
+
+                // Če imamo dovolj povezav, prekinemo izvajanje
+                if (lstEdgesOfTree.Count == this.Vertices.Count - 1)
+                    break;
+            }
+
+            //Izračunamo še vsoto vseh uteži na povezavah
+            double sumWeights = lstEdgesOfTree.Sum(x => x.Weight);
             return sumWeights;
         }
 
