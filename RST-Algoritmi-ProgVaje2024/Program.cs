@@ -28,7 +28,7 @@ namespace RST_Algoritmi_ProgVaje2024
         }
 
         private static void TestiranjeGrafov()
-        {   
+        {
             // Pripravimo primer grafa
             Graph mojGraf = new Graph(4);
             mojGraf.Edges.Add(new Edge(0, 1, 3));
@@ -36,15 +36,21 @@ namespace RST_Algoritmi_ProgVaje2024
             mojGraf.Edges.Add(new Edge(2, 3, 4));
             mojGraf.Edges.Add(new Edge(3, 0, 2));
 
+            double sum = mojGraf.MinimalSpanningTreeByPrim();
+            Console.WriteLine($"Minimalno vpeto drevo ima vrednost:{sum}");
+
             Console.WriteLine($"Naš graf je naslednji:\n{mojGraf}\n");
 
             // Kreiramo slučajne grafe, dokler ne dobimo povezanega:
-            int n = 100;
-            int m = 140;
-            Graph rndGraf = Graph.CreateRandomGraph(n, m);
-                        
+            int n = 10000;
+            int m = 15000;
+            Graph rndGraf = Graph.CreateRandomGraph(n, m, isConnected: true, weightUpperBound: 20);
+            Stopwatch sw = Stopwatch.StartNew();
+            sum = rndGraf.MinimalSpanningTreeByPrim();
+            Console.WriteLine($"Minimalno vpeto drevo ima vrednost:{sum} (Čas izvajanja: {sw.Elapsed.TotalSeconds:0.00})");
 
-            Console.WriteLine($"Izvedba Primovega algoritma na grafu da vrednost: ");            
+
+            Console.WriteLine($"Izvedba Primovega algoritma na grafu da vrednost: ");
         }
 
         private static void HitrostiZank()

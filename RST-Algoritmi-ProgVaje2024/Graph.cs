@@ -173,9 +173,11 @@ namespace RST_Algoritmi_ProgVaje2024
         /// </summary>
         public double MinimalSpanningTreeByPrim()
         {
-            List<int> lstIn = new List<int>() { this.Vertices.First() };
+            // Uporabimo HashSet, ker izvajamo veliko funkcij s Contains nad njim! 
+            HashSet<int> lstInTree = new() { this.Vertices.First() };
+            List<Edge> lstEdgesOfTree = new();
 
-            while (lstIn.Count < this.Vertices.Count)
+            while (lstInTree.Count < this.Vertices.Count)
             {
                 Edge? minEdge = null;
                 // Poiščemo povezavo z minimalno utežjo,
@@ -183,9 +185,9 @@ namespace RST_Algoritmi_ProgVaje2024
                 // drugega pa ne.
                 foreach (Edge edge in this.Edges)
                 {
-                    if (lstIn.Contains(edge.Start) && !(lstIn.Contains(edge.End)
-                            || 
-                        lstIn.Contains(edge.End) && !(lstIn.Contains(edge.Start))))
+                    if (lstInTree.Contains(edge.Start) && !lstInTree.Contains(edge.End)
+                            ||
+                        lstInTree.Contains(edge.End) && !lstInTree.Contains(edge.Start))
                     {
                         if (minEdge == null)
                         {
@@ -198,9 +200,22 @@ namespace RST_Algoritmi_ProgVaje2024
                     }
                 }
 
+                lstEdgesOfTree.Add(minEdge.Value);
+
+                if (lstInTree.Contains(minEdge.Value.Start))
+                {
+                    lstInTree.Add(minEdge.Value.End);
+                }
+                else
+                {
+                    lstInTree.Add(minEdge.Value.Start);
+                }
             }
 
-            return 1.0;
+            //Izračunamo še vsoto vseh uteži na povezavah
+            double sumWeights = lstEdgesOfTree.Sum(x => x.Weight);
+
+            return sumWeights;
         }
 
         /// <summary>
