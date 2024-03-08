@@ -25,7 +25,7 @@
 
         public override string ToString()
         {
-            return $"({this.Start}, {this.End}; {this.Weight:0.##})";
+            return $"({this.Start}, {this.End}; {this.Weight:0.0#})";
         }
     }
 }

@@ -15,14 +15,14 @@ namespace RST_Algoritmi_ProgVaje2024
         static void Main(string[] args)
         {
             // Preverjanje izvedbe zanke po Matejevem komentarju:
-            HitrostiZank();
+            //HitrostiZank();
 
             // V prvem sklopu vaj pripravljamo kodo za
             // reševanje problema minimalnega vpetega drevesa v uteženih,
             // neusmerjenih grafih.
 
             // Začnimo s testiranjem funkcij v razredu graf
-            //TestiranjeGrafov();
+            TestiranjeGrafov();
 
             Console.Read();
         }
@@ -42,16 +42,9 @@ namespace RST_Algoritmi_ProgVaje2024
             int n = 100;
             int m = 140;
             Graph rndGraf = Graph.CreateRandomGraph(n, m);
+                        
 
-            int stevecPoskusov = 0;
-            while (!rndGraf.IsConnected())
-            {
-                rndGraf = Graph.CreateRandomGraph(n, m);
-                stevecPoskusov++;
-            }
-
-            Console.WriteLine($"Po {stevecPoskusov} poskusih smo našli povezav slučajni graf na {n} vozliščih " +
-                $"in {m} povezavah!");            
+            Console.WriteLine($"Izvedba Primovega algoritma na grafu da vrednost: ");            
         }
 
         private static void HitrostiZank()

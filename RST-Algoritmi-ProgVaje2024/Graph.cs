@@ -104,7 +104,7 @@ namespace RST_Algoritmi_ProgVaje2024
             {
                 throw new Exception("Too many edges!");
             }
-            else if(m < n-1 && isConnected)
+            else if (m < n - 1 && isConnected)
             {
                 throw new Exception("Not enough edges!");
             }
@@ -112,6 +112,11 @@ namespace RST_Algoritmi_ProgVaje2024
             Graph graph = new Graph(n);
 
             Random rnd = new Random();
+
+            if (isConnected)
+            {
+                CreateRandomSpanningTree(graph, weightUpperBound);
+            }
 
             while (graph.Edges.Count < m)
             {
@@ -140,6 +145,65 @@ namespace RST_Algoritmi_ProgVaje2024
         }
 
         /// <summary>
+        /// Poišče neko slučajno vpeto drevo, 
+        /// ki ga lahko uporabimo za kreiranje povezanega slučajnega grafa.
+        /// </summary>
+        public static void CreateRandomSpanningTree(Graph graph, int weightUpperBound = 1)
+        {
+            List<int> lstIn = new List<int>() { graph.Vertices.First() };
+            List<int> lstOut = new List<int>(graph.Vertices.Where(x => !lstIn.Contains(x)));
+
+            Random rnd = new Random();
+
+            for (int i = 0; i < graph.Vertices.Count - 1; i++)
+            {
+                int vertIn = lstIn[rnd.Next(0, lstIn.Count - 1)];
+                int vertOut = lstOut[rnd.Next(0, lstOut.Count - 1)];
+
+                Edge edge = new Edge(vertIn, vertOut, rnd.Next(1, weightUpperBound));
+                graph.Edges.Add(edge);
+
+                lstIn.Add(vertOut);
+                lstOut.Remove(vertOut);
+            }
+        }
+
+        /// <summary>
+        /// Algoritem za iskanje minimalnega vpetega drevesa po Primovem algoritmu
+        /// </summary>
+        public double MinimalSpanningTreeByPrim()
+        {
+            List<int> lstIn = new List<int>() { this.Vertices.First() };
+
+            while (lstIn.Count < this.Vertices.Count)
+            {
+                Edge? minEdge = null;
+                // Poiščemo povezavo z minimalno utežjo,
+                // ki ima eno krajišče v trenutnem drevesu,
+                // drugega pa ne.
+                foreach (Edge edge in this.Edges)
+                {
+                    if (lstIn.Contains(edge.Start) && !(lstIn.Contains(edge.End)
+                            || 
+                        lstIn.Contains(edge.End) && !(lstIn.Contains(edge.Start))))
+                    {
+                        if (minEdge == null)
+                        {
+                            minEdge = edge;
+                        }
+                        else if (minEdge.Value.Weight > edge.Weight)
+                        {
+                            minEdge = edge;
+                        }
+                    }
+                }
+
+            }
+
+            return 1.0;
+        }
+
+        /// <summary>
         /// Graf predstavimo s seznamom njegovih povezav.
         /// Pozor: izoliranih vozlišč ne izpišemo.
         /// </summary>
@@ -153,7 +217,6 @@ namespace RST_Algoritmi_ProgVaje2024
             }
             return output;
         }
-
     }
 
 
